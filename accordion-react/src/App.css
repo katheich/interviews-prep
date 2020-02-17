@@ -1,0 +1,14 @@
+.accordion {
+  margin: 10px;
+  background-color: lightgrey;
+}
+
+.accordion .panel {
+  background-color: white;
+  padding: 5px 0;
+  display: none;
+}
+
+.accordion.selected .panel {
+  display: block;
+}
