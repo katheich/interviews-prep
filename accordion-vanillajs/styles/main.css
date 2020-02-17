@@ -1,0 +1,34 @@
+* {
+  box-sizing: border-box;
+}
+
+.accordion {
+  width: 95vw;
+  margin: 10px;
+  transition: 0.4s;
+}
+
+.accordion-title {
+  max-width: 100%;
+  background-color: lightgrey;
+  padding: 5px;
+}
+
+.accordion-title:hover {
+  background-color: grey;
+}
+
+.accordion-panel {
+  max-width: 95vw;
+  background-color: white;
+  margin: 5px 0;
+  /* display: none; */
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.accordion-panel.selected {
+  /* display: block; */
+  max-height: 90vh;
+}
