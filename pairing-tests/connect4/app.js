@@ -35,7 +35,6 @@ const readline = require('readline').createInterface({
 })
 
 function recursiveReadline() {
-
   if (playing) {
     readline.question(`Player ${playerOneTurn ? '1' : '2'}: Enter column number `, (column) => {
       playerMove(parseInt(column) - 1)
@@ -111,8 +110,30 @@ function checkVictory() {
   }
 
   // check diagonal
-  
+  for (let i = 0; i < 7; i++) {
+    let rightDiagonal = ''
+    let leftDiagonal = ''
 
+    for (let x = 0; x < 6; x++) {
+      if (i + x < 7) {
+        rightDiagonal += gridArray[x][i + x]
+      } else {
+        continue
+      }
+    }
+
+    for (let x = 0; x < 6; x++) {
+      if (i - x > -1) {
+        leftDiagonal += gridArray[x][i - x]
+      } else {
+        continue
+      }
+    }
+
+    if (rightDiagonal.includes(regex) || leftDiagonal.includes(regex)) {
+      endGame()
+    }
+  }
 }
 
 
