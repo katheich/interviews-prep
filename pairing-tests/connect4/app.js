@@ -34,34 +34,43 @@ const readline = require('readline').createInterface({
   output: process.stdout
 })
 
-  readline.question(`Player ${playerOneTurn ? '1' : '2'}: Enter column number `, (column) => {
-    playerMove(parseInt(column) - 1)
-    readline.close()
-  })
+function recursiveReadline() {
 
+  if (playing) {
+    readline.question(`Player ${playerOneTurn ? '1' : '2'}: Enter column number `, (column) => {
+      playerMove(parseInt(column) - 1)
+      recursiveReadline()
+    })
+  } else {
+    readline.close()
+  }
+
+  
+ 
+}
+
+recursiveReadline()
   
 
 
-function playerMove(column) {
-  console.log(column)
+function playerMove(index) {
+  console.log(index)
 
   for (let i = 1; i < gridArray.length; i++) {
-    const cell = gridArray[gridArray.length - i][column]
+    const cell = gridArray[gridArray.length - i][index]
 
     if (cell === '.') {
-      gridArray[gridArray.length - i][column] = playerOneTurn ? 'x' : 'o'
+      gridArray[gridArray.length - i][index] = playerOneTurn ? 'x' : 'o'
       break
     } else {
       continue
     }
-
   }
 
   visualGrid(gridArray)
   checkVictory()
 
   playerOneTurn = !playerOneTurn
-  playing = false
 }
 
 
@@ -87,7 +96,6 @@ function checkVictory() {
 
 
   // check diagonal
-
 
 }
 
