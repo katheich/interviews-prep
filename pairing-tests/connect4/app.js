@@ -110,34 +110,35 @@ function checkVictory() {
   }
 
   // check diagonal
-  for (let i = 0; i < 7; i++) {
-    let rightDiagonal = ''
-    let leftDiagonal = ''
+  for (let row = 0; row < 3; row++) {
+    for (let i = 0; i < 7; i++) {
+      let rightDiagonal = ''
+      let leftDiagonal = ''
 
-    for (let x = 0; x < 6; x++) {
-      if (i + x < 7) {
-        rightDiagonal += gridArray[x][i + x]
-      } else {
+      if (i !== 0 && i !== 6 && row > 0) {
         continue
       }
-    }
 
-    for (let x = 0; x < 6; x++) {
-      if (i - x > -1) {
-        leftDiagonal += gridArray[x][i - x]
-      } else {
-        continue
+      for (let x = 0; x < 6; x++) {
+
+        if (row + x > 6 || row + x + 1 > 6) {
+          continue
+        }
+
+        if (i + x < 7) {
+          rightDiagonal += gridArray[row + x][i + x]
+        } 
+        
+        if (i - x > -1) {
+          leftDiagonal += gridArray[row + x][i - x]
+        }
       }
-    }
 
-    if (rightDiagonal.includes(regex) || leftDiagonal.includes(regex)) {
-      endGame()
+      if (rightDiagonal.includes(regex) || leftDiagonal.includes(regex)) {
+        endGame()
+      }
     }
   }
 }
-
-
-
-
 
 // if full, end game?
