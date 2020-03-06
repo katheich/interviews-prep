@@ -1,17 +1,26 @@
 
 // make the grid - array of arrays
 
-const grid = []
+const gridArray = []
 
 for (let y = 0; y < 6; y++) {
   const row = []
   for (let x = 0; x < 7; x++) {
     row.push('.')
   }
-  grid.push(row)
+  gridArray.push(row)
 }
 
-console.log(grid)
+function visualGrid(grid) {
+  
+  grid.forEach(row => {
+    const line = row.join(' ')
+    console.log(line)
+  })
+
+}
+
+visualGrid(gridArray)
 
 
 // players take turns, input column to place piece
