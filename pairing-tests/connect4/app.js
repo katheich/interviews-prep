@@ -43,18 +43,19 @@ function recursiveReadline() {
     })
   } else {
     readline.close()
-  }
-
-  
- 
+  } 
 }
 
 recursiveReadline()
   
 
-
+// player moves
 function playerMove(index) {
   console.log(index)
+
+  if (index < 0 || index > 6) { 
+    return
+  }
 
   for (let i = 1; i < gridArray.length; i++) {
     const cell = gridArray[gridArray.length - i][index]
@@ -76,6 +77,11 @@ function playerMove(index) {
 
 // after piece is placed, check whether anyone won
 
+function endGame() {
+  playing = false
+  console.log(`Player ${playerOneTurn ? '1' : '2'} has won!`)
+}
+
 function checkVictory() {
   const symbol = playerOneTurn ? 'x' : 'o'
   let regex = ''
@@ -86,16 +92,26 @@ function checkVictory() {
 
   // check each row
   gridArray.forEach(row => {
-    if (row.join().includes(regex)) {
-      playing = false
-      console.log(`Player ${playerOneTurn ? '1' : '2'} has won!`)
+    if (row.join('').includes(regex)) {
+      endGame()
     }
   })
 
   // check each column
+  for (let j = 0; j < 7; j++) {
+    let column = ''
 
+    for (let i = 0; i < 6; i++) {
+      column += gridArray[i][j]
+    }
+    
+    if (column.includes(regex)) {
+      endGame()
+    }
+  }
 
   // check diagonal
+  
 
 }
 
