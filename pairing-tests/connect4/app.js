@@ -25,8 +25,74 @@ visualGrid(gridArray)
 
 // players take turns, input column to place piece
 
+let playerOneTurn = true
+let playing = true
+
+
+const readline = require('readline').createInterface({
+  input: process.stdin,
+  output: process.stdout
+})
+
+  readline.question(`Player ${playerOneTurn ? '1' : '2'}: Enter column number `, (column) => {
+    playerMove(parseInt(column) - 1)
+    readline.close()
+  })
+
+  
+
+
+function playerMove(column) {
+  console.log(column)
+
+  for (let i = 1; i < gridArray.length; i++) {
+    const cell = gridArray[gridArray.length - i][column]
+
+    if (cell === '.') {
+      gridArray[gridArray.length - i][column] = playerOneTurn ? 'x' : 'o'
+      break
+    } else {
+      continue
+    }
+
+  }
+
+  visualGrid(gridArray)
+  checkVictory()
+
+  playerOneTurn = !playerOneTurn
+  playing = false
+}
+
 
 // after piece is placed, check whether anyone won
+
+function checkVictory() {
+  const symbol = playerOneTurn ? 'x' : 'o'
+  let regex = ''
+
+  for (let i = 0; i < 4; i++) {
+    regex += symbol
+  }
+
+  // check each row
+  gridArray.forEach(row => {
+    if (row.join().includes(regex)) {
+      playing = false
+      console.log(`Player ${playerOneTurn ? '1' : '2'} has won!`)
+    }
+  })
+
+  // check each column
+
+
+  // check diagonal
+
+
+}
+
+
+
 
 
 // if full, end game?
