@@ -1,3 +1,5 @@
+// Class definition
+
 const artists = []
 
 class Artist {
@@ -42,6 +44,8 @@ class Artist {
     console.log(`${this.stageName === '' ? this.name : this.stageName}, ${this.address[0].city}`, '\n', `Skills: ${skillsList}`, '\n', `Languages: ${langList}`,'\n', `Bio: ${this.bio}`)
   }
 }
+
+// Examples
 
 const cw = new Artist(
   'Christoph Waltz',
@@ -126,4 +130,26 @@ const ap = new Artist(
 // cw.summarise()
 // ap.summarise()
 
-console.log(artists)
+// console.log(artists)
+
+// Search function
+
+function search(type, value) {
+  const matches = []
+
+  if (type === 'lang') {
+    artists.forEach(artist => {
+      artist.langsList().includes(value) ? matches.push(artist.name) : ''
+    })
+  } else if (type === 'skill') {
+    artists.forEach(artist => {
+      artist.skillsList().includes(value) ? matches.push(artist.name) : ''
+    })
+  }
+
+  return matches
+}
+
+
+console.log(search('lang', 'English'))
+console.log(search('skill', 'martial arts'))
