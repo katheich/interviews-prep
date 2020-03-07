@@ -1,3 +1,5 @@
+const artists = []
+
 class Artist {
 
   name
@@ -22,15 +24,23 @@ class Artist {
     this.bio = bio,
     this.taxCode = taxCode,
     this.bankAccounts = bankAccounts
+    artists.push(this)
+  }
+
+  skillsList() {
+    return this.skills.map(skill => skill.skill)
+  }
+
+  langsList() {
+    return this.lang.map(lang => lang.lang)
   }
 
   summarise() {
-    const skillsList = this.skills.map(skill => skill.skill).join(', ')
-    const langList = this.lang.map(lang => lang.lang).join(', ')
+    const skillsList = this.skillsList().join(', ')
+    const langList = this.langsList().join(', ')
 
     console.log(`${this.stageName === '' ? this.name : this.stageName}, ${this.address[0].city}`, '\n', `Skills: ${skillsList}`, '\n', `Languages: ${langList}`,'\n', `Bio: ${this.bio}`)
   }
-
 }
 
 const cw = new Artist(
@@ -74,6 +84,46 @@ const cw = new Artist(
   }]
 )
 
+const ap = new Artist(
+  'Aaron Paul',
+  '',
+  [{
+    type: 'home',
+    contact: 'Aaron',
+    street: 'Something 123',
+    city: 'Los Angeles',
+    country: 'USA'
+  },
+  {
+    type: 'billing',
+    contact: 'Charlie',
+    street: 'Something else 123',
+    city: 'Los Angeles',
+    country: 'USA'
+  }],
+  'somethingnew@somethingnew.com',
+  '+1123456789',
+  [{
+    skill: 'martial arts',
+    level: 'not great',
+    notes: ''
+  }],
+  [{
+    lang: 'English',
+    level: 'fluent',
+    notes: ''
+  }],
+  'Aaron Paul was born Aaron Paul Sturtevant in Emmett, Idaho, to Darla (Haynes) and Robert Sturtevant, a retired Baptist minister. While growing up, Paul took part in church programs, and performed in plays. He attended Centennial High School in Boise, Idaho. It was there, in eighth grade, that Aaron decided he wanted to become an actor. ',
+  '654321',
+  [{
+    type: 'billing',
+    number: '0915125213'
+  }]
+)
+
 // console.log(cw)
 
-cw.summarise()
+// cw.summarise()
+// ap.summarise()
+
+console.log(artists)
