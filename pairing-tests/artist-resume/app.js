@@ -24,9 +24,16 @@ class Artist {
     this.bankAccounts = bankAccounts
   }
 
+  summarise() {
+    const skillsList = this.skills.map(skill => skill.skill).join(', ')
+    const langList = this.lang.map(lang => lang.lang).join(', ')
+
+    console.log(`${this.stageName === '' ? this.name : this.stageName}, ${this.address[0].city}`, '\n', `Skills: ${skillsList}`, '\n', `Languages: ${langList}`,'\n', `Bio: ${this.bio}`)
+  }
+
 }
 
-let cw = new Artist(
+const cw = new Artist(
   'Christoph Waltz',
   '',
   [{
@@ -67,5 +74,6 @@ let cw = new Artist(
   }]
 )
 
-console.log(cw)
+// console.log(cw)
 
+cw.summarise()
