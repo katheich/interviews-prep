@@ -12,7 +12,7 @@ function selectSlot() {
   return options[index]
 }
 
-// loop that runs slot selection function four times
+// Ask player whether wants to play
 const readline = require('readline').createInterface({
   input: process.stdin,
   output: process.stdout
@@ -33,6 +33,8 @@ function recursiveReadline() {
   } 
 } 
 recursiveReadline()
+
+// loop that runs slot selection function four times
 
 function playGame() {
   slots = []
@@ -91,12 +93,9 @@ function determinePrize() {
     console.log(`STREAK! You won ${price * 5}!`)
     jackpotBudget(price * 5)
   }
-
-  // if not enough money, play credit
-
-
 }
 
+// if not enough money, play credit
 function jackpotBudget(prize) {
   if (jackpot < prize) {
     playerBudget += prize
