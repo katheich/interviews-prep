@@ -5,38 +5,29 @@
 
 // if a factor, check whether gems can be allocated 
 
-
 function splitTreasure(treasure) {
 
   console.log(treasure)
 
   const possibleAllocations = []
+
   const sortedTreasure = treasure.sort(function(a, b) { return b - a } )
 
   const totalTreasure = treasure.reduce((total, gem) => {
     return total += gem
   }, 0)
 
-  console.log(totalTreasure)
-
-  for (let i = 2; i <= treasure.length; i++) {
+  for (let i = 2; i < treasure.length + 1; i++) {
 
     if (totalTreasure % i === 0) {
       
-      console.log(i, 'possible solution')
-
       // check whether gems can be allocated
       const split = totalTreasure / i
 
-      if (sortedTreasure[0] > split) {
-        console.log('cant split')
-
-      } else {
-        // allocate gems
-
-        allocationCheck(sortedTreasure, i, split)
-
-      }
+      if (sortedTreasure[0] <= split) {
+        const alloc = allocationCheck(sortedTreasure, i, split)
+        alloc && possibleAllocations.push(alloc)
+      } 
 
     } else {
       continue
@@ -44,18 +35,55 @@ function splitTreasure(treasure) {
 
   }
 
-  return possibleAllocations
-
+  console.log('Possible Allocations: ', possibleAllocations)
 }
 
 
 function allocationCheck(treasure, number, split) {
-  const tempTreasure = treasure
+  const tempTreasure = [...treasure]
 
-  console.log(tempTreasure, split)
+  const allocation = []
 
+  for (let x = 0; x < number; x++) {
+    allocation.push([])
+  }
 
+  for (let x = 0; x < number; x++) {
+    allocation[x].push(tempTreasure.shift())
 
+    tempTreasure.forEach((gem) => {
+      
+      const tempTotal = allocation[x].reduce((total, gem) => {
+        return total += gem
+      }, 0)
+
+      if (tempTotal + gem <= split) {
+        allocation[x].push(gem)
+      }
+
+    })
+    
+    allocation[x].forEach(gem => {
+      tempTreasure.indexOf(gem) > 0 ? tempTreasure.splice(tempTreasure.indexOf(gem), 1) : ''
+    })
+
+  }
+
+  const totals = allocation
+    .map(alloc => {
+      return alloc.reduce((total, gem) => {
+        return total += gem
+      }, 0)
+    })
+    .reduce((correct, alloc) => {
+      return correct && alloc === split
+    }, true)
+
+  // console.log(allocation, totals)
+
+  if (totals) {
+    return allocation
+  }
 }
 
 splitTreasure([4,4,4])
