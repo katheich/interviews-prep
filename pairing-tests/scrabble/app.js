@@ -84,6 +84,30 @@ const textByLine = fs.readFileSync('twl06.txt').toString().split('\n')
 
 // console.log(textByLine)
 
+let validWords = []
+
+for (let i = 0; i < rack.length; i++) {
+
+  validWords += textByLine.filter(word => {
+    return word.length === i + 1 && rack.reduce((bool, letter, index) => {
+      if (index > i) {
+        return true
+
+      } else {
+        return bool && word.includes(letter)
+      }
+    }, true)
+    
+  })
+
+
+
+}
+
+console.log(validWords)
+
+// find longest valid word
+
 // find highest scoring word
 
 
