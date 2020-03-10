@@ -84,29 +84,33 @@ const textByLine = fs.readFileSync('twl06.txt').toString().split('\n')
 
 // console.log(textByLine)
 
-let validWords = []
+function combinations(array) {
 
-for (let i = 0; i < rack.length; i++) {
+  const combis = []
 
-  validWords += textByLine.filter(word => {
-    return word.length === i + 1 && rack.reduce((bool, letter, index) => {
-      if (index > i) {
-        return true
+  if (array.length === 1) return array
 
-      } else {
-        return bool && word.includes(letter)
-      }
-    }, true)
-    
-  })
-
-
-
+  for (let i = 0; i < array.length; i++) {
+    combinations(array.join('').replace(array[i], '').split('')).concat('').map(function(subtree) {
+      combis.push([array[i]].concat(subtree))
+    })
+  }
+  return combis.map(str => str.join(''))
 }
 
+const validWords = combinations(rack).filter(word => textByLine.includes(word))
 console.log(validWords)
 
 // find longest valid word
+// function longestWord(list) {
+//   const maxLength = Math.max(...list.map(word => word.length))
+
+//   console.log(list.filter(word => word.length === maxLength))
+
+// }
+
+// longestWord(validWords)
+
 
 // find highest scoring word
 
