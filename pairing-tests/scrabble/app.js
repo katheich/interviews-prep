@@ -86,7 +86,7 @@ const textByLine = fs.readFileSync('twl06.txt').toString().split('\n')
 
 function combinations(array) {
 
-  const combis = []
+  let combis = []
 
   if (array.length === 1) return array
 
@@ -95,24 +95,29 @@ function combinations(array) {
       combis.push([array[i]].concat(subtree))
     })
   }
-  return combis.map(str => str.join(''))
+  combis = combis.map(str => str.join(''))
+  return combis.filter((word, i) => i === combis.indexOf(word))
 }
 
 const validWords = combinations(rack).filter(word => textByLine.includes(word))
-console.log(validWords)
+console.log('possible words', validWords)
 
 // find longest valid word
-// function longestWord(list) {
-//   const maxLength = Math.max(...list.map(word => word.length))
+function longestWord(list) {
+  const maxLength = Math.max(...list.map(word => word.length))
+  return list.filter(word => word.length === maxLength)
+}
 
-//   console.log(list.filter(word => word.length === maxLength))
-
-// }
-
-// longestWord(validWords)
+console.log('Longest words', longestWord(validWords))
 
 
 // find highest scoring word
+function highestScore(list) {
+  const maxScore = Math.max(...list.map(word => score(word)))
+  return list.filter(word => score(word) === maxScore)
+}
+
+console.log('Highest score', highestScore(validWords), score(highestScore(validWords)[0]))
 
 
 // find highest scoring word if any letter could score triple
