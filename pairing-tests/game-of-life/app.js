@@ -47,9 +47,9 @@ function getNeighbourCells(x, y) {
   return [[minX, minY], [x, minY], [maxX, minY], [minX, y], [maxX, y], [minX, maxY], [x, maxY], [maxX, maxY]]
 }
 
-// getNeighbourCells(9, 2).forEach(coord => {
+// getNeighbourCells(0, 3).forEach(coord => {
 //   console.log(coord)
-//   gridArray[coord[0]][coord[1]] = 'o'
+//   gridArray[coord[1]][coord[0]] = 'o'
 // })
 
 // visualGrid(gridArray)
@@ -63,12 +63,34 @@ function getNeighbourCells(x, y) {
 
 function stateAssessment(x, y) {
   const alive = getNeighbourCells(x, y).reduce((alive, coord) => {
-    return alive += gridArray[coord[0]][coord[1]] === 'x' ? 1 : 0
+    return alive += gridArray[coord[1]][coord[0]] === 'x' ? 1 : 0
   }, 0)
 
-  return alive
+  if (gridArray[x][y] === 'x') {
+
+    if (alive < 2) {
+      return '.'
+
+    } else if (alive < 4) {
+      return 'x'
+
+    } else {
+      return '.'
+    }
+
+  } else {
+
+    if (alive === 3) {
+      return 'x'
+
+    } else {
+      return '.'
+    }
+  }
 }
 
-console.log(stateAssessment(5, 5))
+console.log(stateAssessment(2, 3))
+
+
 
 ///// run state-assessment function repeatedly at fixed interval
