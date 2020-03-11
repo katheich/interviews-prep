@@ -26,7 +26,6 @@ gridArray[7][8] = 'x'
 gridArray[1][9] = 'x'
 gridArray[4][5] = 'x'
 gridArray[5][6] = 'x'
-gridArray[2][2] = 'o'
 
 // visualise grid
 function visualGrid(grid) {
