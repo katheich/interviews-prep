@@ -61,7 +61,14 @@ function getNeighbourCells(x, y) {
 
 // check if new state is the same as previous, if so end interval
 
+function stateAssessment(x, y) {
+  const alive = getNeighbourCells(x, y).reduce((alive, coord) => {
+    return alive += gridArray[coord[0]][coord[1]] === 'x' ? 1 : 0
+  }, 0)
 
+  return alive
+}
 
+console.log(stateAssessment(5, 5))
 
 ///// run state-assessment function repeatedly at fixed interval
