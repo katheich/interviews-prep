@@ -41,10 +41,10 @@ visualGrid(gridArray)
 
 // determine all neighbouring cells
 function getNeighbourCells(x, y) {
-  let minX = x - 1 >= 0 ? x - 1 : size - 1
-  let minY = y - 1 >= 0 ? y - 1 : size - 1
-  let maxX = x + 1 < size ? x + 1 : 0
-  let maxY = y + 1 < size ? y + 1 : 0
+  const minX = x - 1 >= 0 ? x - 1 : size - 1
+  const minY = y - 1 >= 0 ? y - 1 : size - 1
+  const maxX = x + 1 < size ? x + 1 : 0
+  const maxY = y + 1 < size ? y + 1 : 0
 
   return [[minX, minY], [x, minY], [maxX, minY], [minX, y], [maxX, y], [minX, maxY], [x, maxY], [maxX, maxY]]
 }
@@ -104,12 +104,8 @@ function stateAssessment(x, y) {
 const interval = setInterval(() => {
   generation++
   const newGrid = gridArray.map(row => [...row])
-  // console.log(newGrid)
   for (let x = 0; x < size; x++) {
     for (let y = 0; y < size; y++) {
-      // console.log(x, y)
-      // console.log(newGrid[y][x])
-      // console.log(stateAssessment(x, y))
       newGrid[y][x] = stateAssessment(x, y)
     }
   }
