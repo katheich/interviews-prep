@@ -38,7 +38,21 @@ visualGrid(gridArray)
 
 
 // determine all neighbouring cells
+function getNeighbourCells(x, y) {
+  let minX = x - 1 >= 0 ? x - 1 : size - 1
+  let minY = y - 1 >= 0 ? y - 1 : size - 1
+  let maxX = x + 1 < size ? x + 1 : 0
+  let maxY = y + 1 < size ? y + 1 : 0
 
+  return [[minX, minY], [x, minY], [maxX, minY], [minX, y], [maxX, y], [minX, maxY], [x, maxY], [maxX, maxY]]
+}
+
+// getNeighbourCells(9, 2).forEach(coord => {
+//   console.log(coord)
+//   gridArray[coord[0]][coord[1]] = 'o'
+// })
+
+// visualGrid(gridArray)
 
 //// state assessment function
 // determine how many neighbouring cells alive
@@ -46,6 +60,7 @@ visualGrid(gridArray)
 // assign states accordingly
 
 // check if new state is the same as previous, if so end interval
+
 
 
 
