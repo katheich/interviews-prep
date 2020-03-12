@@ -8,7 +8,7 @@ function formatTime(time, min, sec) {
   seconds += sec
 
   if (seconds >= 60) {
-    minutes += 1
+    minutes += Math.floor(seconds / 60)
     seconds = seconds % 60
   }
 
