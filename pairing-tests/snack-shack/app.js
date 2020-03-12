@@ -1,4 +1,10 @@
 
+let startTime = '0:00'
+let sandwichesOrdered = 0
+let sandwichesScheduled = 0
+let schedule = []
+let endTime = '0:00'
+
 // time formatting
 
 function formatTime(time, min, sec) {
@@ -21,10 +27,15 @@ function formatTime(time, min, sec) {
 
 function sandwichTiming(timestamp, num) {
 
-  console.log(`${timestamp}: start making sandwich ${num}`)
+  schedule.push({ text: `${timestamp}: start making sandwich ${num}`, time: timestamp })
+
+  // console.log(`${timestamp}: start making sandwich ${num}`)
   
   timestamp = formatTime(timestamp, 1, 0)
-  console.log(`${timestamp}: serve sandwich ${num}`)
+  // console.log(`${timestamp}: serve sandwich ${num}`)
+  schedule.push({ text: `${timestamp}: serve sandwich ${num}`, time: timestamp })
+
+  sandwichesScheduled++
 
   timestamp = formatTime(timestamp, 0, 30)
 
@@ -36,19 +47,30 @@ function sandwichTiming(timestamp, num) {
 
 // schedule function
 
-function schedule(sandwichNum) {
+function makeSchedule(time, sandwichNum) {
+  console.log('----')
 
-  console.log(`${time}: ${sandwichNum} sandwiches ordered`)
+  sandwichesOrdered += sandwichNum
+  // console.log(sandwichesOrdered, sandwichesScheduled)
+  // schedule = []
 
-  for (let i = 1; i <= sandwichNum; i++) {
-    time = sandwichTiming(time, i)
+
+  for (let i = 1 + sandwichesScheduled; i <= sandwichesOrdered; i++) {
+    endTime = sandwichTiming(endTime, i)
   }
 
-  console.log(`${time}: stake a break!`)
+
+  schedule.push({ text: `${time}: ${sandwichNum} sandwiches ordered`, time: time })
+  // console.log(`${time}: ${sandwichNum} sandwiches ordered`)
+
+
+  // schedule.push({ text: `${endTime}: stake a break!`, time: endTime })
+  // console.log(`${time}: stake a break!`)
+
+  schedule.sort((a, b) => a.time > b.time ? 1 : -1).forEach(item => console.log(item.text))
 
 }
 
-let time = '0:00'
 
-schedule(4)
-schedule(2)
+makeSchedule(startTime, 4)
+makeSchedule('3:00', 2)
