@@ -19,9 +19,7 @@ function formatTime(time, min, sec) {
 
 // sandwich function
 
-function sandwichTiming(time, num) {
-
-  let timestamp = time
+function sandwichTiming(timestamp, num) {
 
   console.log(`${timestamp}: start making sandwich ${num}`)
   
@@ -40,7 +38,7 @@ function sandwichTiming(time, num) {
 
 function schedule(sandwichNum) {
 
-  let time = '0:00'
+  console.log(`${time}: ${sandwichNum} sandwiches ordered`)
 
   for (let i = 1; i <= sandwichNum; i++) {
     time = sandwichTiming(time, i)
@@ -50,4 +48,7 @@ function schedule(sandwichNum) {
 
 }
 
+let time = '0:00'
+
 schedule(4)
+schedule(2)
