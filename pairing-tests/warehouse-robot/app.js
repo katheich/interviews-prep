@@ -19,3 +19,23 @@ function visualGrid(grid) {
 }
 
 visualGrid(gridArray)
+
+
+// get neighbour cell based on direction
+function getNeighbourCell(x, y, direction) {
+
+  direction = direction.toLowerCase()
+
+  switch (direction) {
+    case 'n': console.log('NORTH'); y = y - 1 < 0 ? 0 : y - 1; break
+    case 'w': console.log('WEST'); y = x - 1 < 0 ? 0 : x - 1; break
+    case 'e': console.log('EAST'); x = x + 1 > 9 ? 9 : x + 1; break
+    case 's': console.log('SOUTH'); y = y + 1 > 9 ? 9 : y + 1; break
+    default: return
+  }
+
+  return [x, y]
+
+}
+
+console.log(getNeighbourCell(3, 3, 'E'))
