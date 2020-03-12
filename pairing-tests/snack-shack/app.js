@@ -9,7 +9,7 @@ function formatTime(time, min, sec) {
 
   if (seconds >= 60) {
     minutes += 1
-    seconds -= 60
+    seconds = seconds % 60
   }
 
   minutes += min
