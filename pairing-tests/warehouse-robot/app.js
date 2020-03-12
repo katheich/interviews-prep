@@ -1,5 +1,10 @@
-let robot = [0, 0]
+let robot = [9, 9]
 let playing = true
+let carryingCrate = false
+
+let crates = [[4, 4], [0, 0]]
+let carriedCrate = null
+
 
 // Grid
 const gridArray = []
@@ -41,7 +46,65 @@ function getNeighbourCell(x, y, direction) {
 
 // console.log(getNeighbourCell(9, 3, 'e'))
 
-// interface for issuing commands
+// CRATES
+
+function assignCrates(newCrates) {
+  crates.forEach(crate => {
+    gridArray[crate[1]][crate[0]] = '.'
+  })
+  
+  newCrates.forEach((crate, index) => {
+    if (crate[0] !== robot[0] || crate[1] !== robot[1]) {
+      gridArray[crate[1]][crate[0]] = 'o'
+
+    } else {
+
+      if (carryingCrate && carriedCrate !== index) {
+        gridArray[crate[1]][crate[0]] = 'xoo'
+      } else {
+        gridArray[crate[1]][crate[0]] = 'xo'
+      }
+      
+    }
+  })
+
+  crates = newCrates
+}
+
+assignCrates(crates)
+
+
+function handleCrates(x, y, action) {
+  const combi = gridArray[y][x] + ', ' + action
+  console.log(combi)
+
+  switch (combi) {
+    case 'xo, g': {
+      carryingCrate ? console.log('already carrying a crate') : (
+        console.log('take the crate'), 
+        carryingCrate = true,
+        carriedCrate = crates.findIndex(crate => crate[0] === x && crate[1] === y))
+      break
+
+    } case 'xo, d': {
+      carryingCrate ? (
+        console.log('drop the crate'),
+        carryingCrate = false,
+        carriedCrate = null) 
+        : console.log('not carrying any crate') 
+      break
+    } 
+    case 'x, g': console.log('no crate to take'); break
+    case 'x, d': console.log('not carrying any crate'); break
+    case 'xoo, g': console.log('already carring a crate'); break
+    case 'xoo, d': console.log('already a crate in this place'); break
+    default: console.log('oops'); break
+  }
+
+}
+
+
+// INTERFACE
 
 const readline = require('readline').createInterface({
   input: process.stdin,
@@ -50,18 +113,34 @@ const readline = require('readline').createInterface({
 
 function recursiveReadline() {
   if (playing) {
-    readline.question('Enter a direction (n, w, e, s) ', (direction) => {
-      direction = direction.toLowerCase()
+    readline.question('Enter a direction (n, w, e, s) or action (g, d): ', (action) => {
+      action = action.toLowerCase()
 
-      if (['n', 'w', 'e', 's'].includes(direction)) {
+      if (['n', 'w', 'e', 's'].includes(action)) {
         gridArray[robot[1]][robot[0]] = '.'
-        robot = getNeighbourCell(...robot, direction)
-        gridArray[robot[1]][robot[0]] = 'x'
+
+        robot = getNeighbourCell(...robot, action)
+
+        gridArray[robot[1]][robot[0]] = carryingCrate ? 'xo' : 'x'
+
+        console.log(carryingCrate, carriedCrate)
+
+        if (carryingCrate) {
+          crates[carriedCrate] = robot
+        }
+
+        assignCrates(crates)
+        
         visualGrid(gridArray)
+        
+      } else if (['g', 'd'].includes(action)) {
+        handleCrates(...robot, action)
+
       } else {
         playing = false
 
       }
+
       recursiveReadline()
     })
   } else {
@@ -73,3 +152,9 @@ gridArray[robot[1]][robot[0]] = 'x'
 visualGrid(gridArray)
 
 recursiveReadline()
+
+
+
+
+
+
