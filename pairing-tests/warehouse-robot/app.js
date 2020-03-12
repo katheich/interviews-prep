@@ -37,6 +37,10 @@ function getNeighbourCell(x, y, direction) {
     case 'w': console.log('WEST'); x = x - 1 < 0 ? 0 : x - 1; break
     case 'e': console.log('EAST'); x = x + 1 > 9 ? 9 : x + 1; break
     case 's': console.log('SOUTH'); y = y + 1 > 9 ? 9 : y + 1; break
+    case 'nw': console.log('NORTH-WEST'); y = y - 1 < 0 ? 0 : y - 1; x = x - 1 < 0 ? 0 : x - 1; break
+    case 'ne': console.log('NORTH-EAST'); y = y - 1 < 0 ? 0 : y - 1; x = x + 1 > 9 ? 9 : x + 1; break
+    case 'sw': console.log('SOUTH-WEST'); y = y + 1 > 9 ? 9 : y + 1; x = x - 1 < 0 ? 0 : x - 1; break
+    case 'se': console.log('SOUTH-EAST'); y = y + 1 > 9 ? 9 : y + 1; x = x + 1 > 9 ? 9 : x + 1; break
     default: return
   }
 
@@ -113,16 +117,13 @@ const readline = require('readline').createInterface({
 
 function recursiveReadline() {
   if (playing) {
-    readline.question('Enter a direction (n, w, e, s) or action (g, d): ', (action) => {
+    readline.question('Enter a direction (n, w, e, s, nw, ne, sw, se) or action (g, d): ', (action) => {
       action = action.toLowerCase()
 
-      if (['n', 'w', 'e', 's'].includes(action)) {
+      if (['n', 'w', 'e', 's', 'nw', 'ne', 'sw', 'se'].includes(action)) {
         gridArray[robot[1]][robot[0]] = '.'
-
         robot = getNeighbourCell(...robot, action)
-
         gridArray[robot[1]][robot[0]] = carryingCrate ? 'xo' : 'x'
-
         console.log(carryingCrate, carriedCrate)
 
         if (carryingCrate) {
