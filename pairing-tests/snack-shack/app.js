@@ -79,15 +79,13 @@ function makeSchedule(time, sandwichNum) {
     endTime = sandwichTiming(endTime, i)
   }
 
-  const waittime = getDuration(time, endTime)
-
-  schedule.push({ text: `${time}: ${sandwichNum} sandwiches ordered, estimate wait time: ${waittime} min`, time: time })
+  schedule.push({ text: `${time}: ${sandwichNum} sandwiches ordered, estimated wait time: ${getDuration(time, endTime)} min`, time: time })
   // console.log(`${time}: ${sandwichNum} sandwiches ordered`)
 
 
   // schedule.push({ text: `${endTime}: stake a break!`, time: endTime })
   
-  schedule.sort((a, b) => a.time > b.time ? 1 : -1).forEach(item => console.log(item.text))
+  schedule.sort((a, b) => parseInt(a.time.substring(0, a.time.indexOf(':'))) > parseInt(b.time.substring(0, b.time.indexOf(':'))) ? 1 : (parseInt(a.time.substring(a.time.indexOf(':') + 1)) > parseInt(b.time.substring(b.time.indexOf(':') + 1)) ? 1 : -1)).forEach(item => console.log(item.text))
   console.log(`${endTime}: stake a break!`)
 
 }
@@ -95,4 +93,4 @@ function makeSchedule(time, sandwichNum) {
 
 makeSchedule(startTime, 4)
 makeSchedule('3:00', 1)
-makeSchedule('4:00', 1)
+makeSchedule('4:00', 2)
