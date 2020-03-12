@@ -88,7 +88,7 @@ function checkFeasible(sandwichNum, startTime, currentEndTime) {
 function makeSchedule(time, sandwichNum) {
 
   console.log('----------')
-
+  
   const newSandwichNum = checkFeasible(sandwichNum, time, endTime)
 
   sandwichesOrdered += newSandwichNum
@@ -113,5 +113,5 @@ function makeSchedule(time, sandwichNum) {
 
 
 makeSchedule(startTime, 4)
-makeSchedule('3:00', 1)
-makeSchedule('4:00', 2)
+makeSchedule('3:00', 3)
+makeSchedule('4:00', 3)
