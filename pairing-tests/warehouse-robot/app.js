@@ -1,3 +1,6 @@
+let robot = [0, 0]
+let playing = true
+
 // Grid
 const gridArray = []
 
@@ -18,13 +21,11 @@ function visualGrid(grid) {
 
 }
 
-visualGrid(gridArray)
+// visualGrid(gridArray)
 
 
 // get neighbour cell based on direction
 function getNeighbourCell(x, y, direction) {
-
-  direction = direction.toLowerCase()
 
   switch (direction) {
     case 'n': console.log('NORTH'); y = y - 1 < 0 ? 0 : y - 1; break
@@ -38,4 +39,37 @@ function getNeighbourCell(x, y, direction) {
 
 }
 
-console.log(getNeighbourCell(0, 3, 'W'))
+// console.log(getNeighbourCell(9, 3, 'e'))
+
+// interface for issuing commands
+
+const readline = require('readline').createInterface({
+  input: process.stdin,
+  output: process.stdout
+})
+
+function recursiveReadline() {
+  if (playing) {
+    readline.question('Enter a direction (n, w, e, s) ', (direction) => {
+      direction = direction.toLowerCase()
+
+      if (['n', 'w', 'e', 's'].includes(direction)) {
+        gridArray[robot[1]][robot[0]] = '.'
+        robot = getNeighbourCell(...robot, direction)
+        gridArray[robot[1]][robot[0]] = 'x'
+        visualGrid(gridArray)
+      } else {
+        playing = false
+
+      }
+      recursiveReadline()
+    })
+  } else {
+    readline.close()
+  } 
+}
+
+gridArray[robot[1]][robot[0]] = 'x'
+visualGrid(gridArray)
+
+recursiveReadline()
