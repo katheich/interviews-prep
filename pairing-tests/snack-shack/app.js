@@ -23,6 +23,25 @@ function formatTime(time, min, sec) {
   return `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`
 }
 
+// duration function
+
+function getDuration(startTime, endTime) {
+
+  const startSec = parseInt(startTime.substring(startTime.indexOf(':') + 1))
+  const startMin = parseInt(startTime.substring(0, startTime.indexOf(':')))
+  const endSec = parseInt(endTime.substring(endTime.indexOf(':') + 1))
+  const endMin = parseInt(endTime.substring(0, endTime.indexOf(':')))
+  // console.log(startSec, endSec, endSec - startSec - 30)
+
+  const minutes = endSec - startSec - 30 < 0 ? endMin - startMin - 1 : endMin - startMin 
+  const seconds = endSec - startSec - 30 < 0 ? 60 - endSec - startSec - 30 : endSec - startSec - 30
+
+  // console.log(startSec, endSec, endSec - startSec - 30, seconds)
+
+  return `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`
+
+}
+
 // sandwich function
 
 function sandwichTiming(timestamp, num) {
@@ -60,21 +79,9 @@ function makeSchedule(time, sandwichNum) {
     endTime = sandwichTiming(endTime, i)
   }
 
-  // wait time
-  const startSeconds = parseInt(time.substring(time.indexOf(':') + 1))
-  const startMinutes = parseInt(time.substring(0, time.indexOf(':')))
-  const endSeconds = parseInt(endTime.substring(time.indexOf(':') + 1))
-  const endMinutes = parseInt(endTime.substring(0, time.indexOf(':')))
-  
-  let seconds = - (endSeconds - startSeconds - 30)
-  let minutes = (endSeconds - startSeconds <= 0) ? endMinutes - startMinutes - 1 : endMinutes - startMinutes
+  const waittime = getDuration(time, endTime)
 
-  if (seconds < 0) {
-    minutes -= Math.floor(seconds / 60)
-    seconds = - (seconds % 60)
-  }
-
-  schedule.push({ text: `${time}: ${sandwichNum} sandwiches ordered, estimate wait time: ${minutes}:${seconds < 10 ? '0' + seconds : seconds} min`, time: time })
+  schedule.push({ text: `${time}: ${sandwichNum} sandwiches ordered, estimate wait time: ${waittime} min`, time: time })
   // console.log(`${time}: ${sandwichNum} sandwiches ordered`)
 
 
