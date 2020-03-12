@@ -48,7 +48,8 @@ function sandwichTiming(timestamp, num) {
 // schedule function
 
 function makeSchedule(time, sandwichNum) {
-  console.log('----')
+
+  console.log('----------')
 
   sandwichesOrdered += sandwichNum
   // console.log(sandwichesOrdered, sandwichesScheduled)
@@ -59,8 +60,21 @@ function makeSchedule(time, sandwichNum) {
     endTime = sandwichTiming(endTime, i)
   }
 
+  // wait time
+  const startSeconds = parseInt(time.substring(time.indexOf(':') + 1))
+  const startMinutes = parseInt(time.substring(0, time.indexOf(':')))
+  const endSeconds = parseInt(endTime.substring(time.indexOf(':') + 1))
+  const endMinutes = parseInt(endTime.substring(0, time.indexOf(':')))
+  
+  let seconds = - (endSeconds - startSeconds - 30)
+  let minutes = (endSeconds - startSeconds <= 0) ? endMinutes - startMinutes - 1 : endMinutes - startMinutes
 
-  schedule.push({ text: `${time}: ${sandwichNum} sandwiches ordered`, time: time })
+  if (seconds < 0) {
+    minutes -= Math.floor(seconds / 60)
+    seconds = - (seconds % 60)
+  }
+
+  schedule.push({ text: `${time}: ${sandwichNum} sandwiches ordered, estimate wait time: ${minutes}:${seconds < 10 ? '0' + seconds : seconds} min`, time: time })
   // console.log(`${time}: ${sandwichNum} sandwiches ordered`)
 
 
@@ -73,4 +87,4 @@ function makeSchedule(time, sandwichNum) {
 
 
 makeSchedule(startTime, 4)
-makeSchedule('3:00', 2)
+makeSchedule('3:00', 1)
