@@ -86,12 +86,13 @@ function makeSchedule(time, sandwichNum) {
 
 
   // schedule.push({ text: `${endTime}: stake a break!`, time: endTime })
-  // console.log(`${time}: stake a break!`)
-
+  
   schedule.sort((a, b) => a.time > b.time ? 1 : -1).forEach(item => console.log(item.text))
+  console.log(`${endTime}: stake a break!`)
 
 }
 
 
 makeSchedule(startTime, 4)
 makeSchedule('3:00', 1)
+makeSchedule('4:00', 1)
