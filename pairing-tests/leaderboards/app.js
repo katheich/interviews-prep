@@ -3,7 +3,7 @@ const leaderboard = {
   ranking: [],
 
   sortRanking() {
-    this.ranking.sort((a, b) => (a.score < b.score) ? 1 : (a.score === b.score ? ((a.date > b.date) ? -1 : 1) : -1))
+    this.ranking.sort((a, b) => (a.score < b.score) ? 1 : (a.score === b.score ? ((a.date > b.date) ? 1 : -1) : -1))
 
     const tempRanking = this.ranking
     this.ranking.forEach((person, index) => {
@@ -46,3 +46,8 @@ leaderboard.addScore('Susi', 99)
 leaderboard.addScore('Toby', 87)
 
 console.log(leaderboard.ranking)
+
+setTimeout(() => {
+  leaderboard.addScore('Bjorn', 87)
+  console.log(leaderboard.ranking)
+}, 3000)
