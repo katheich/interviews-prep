@@ -33,5 +33,21 @@ function sandwichTiming(time, num) {
   return timestamp
 }
 
-sandwichTiming('03:30', 1)
+// sandwichTiming('03:30', 1)
 
+
+// schedule function
+
+function schedule(sandwichNum) {
+
+  let time = '0:00'
+
+  for (let i = 1; i <= sandwichNum; i++) {
+    time = sandwichTiming(time, i)
+  }
+
+  console.log(`${time}: stake a break!`)
+
+}
+
+schedule(4)
