@@ -64,13 +64,34 @@ function sandwichTiming(timestamp, num) {
 // sandwichTiming('03:30', 1)
 
 
+// check if order is feasible
+function checkFeasible(sandwichNum, startTime, currentEndTime) {
+  let newSandwichNum = 0
+  for (let i = 0; i < sandwichNum; i++) {
+    currentEndTime = formatTime(currentEndTime, 1, 30)
+    const waittime = getDuration(startTime, currentEndTime)
+
+    if (parseInt(waittime.substring(0, waittime.indexOf(':'))) >= 5) {
+      // console.log(waittime, 'TOO LONG')
+      break
+    } else {
+      newSandwichNum++
+    }
+  }
+  // console.log(newSandwichNum)
+  return newSandwichNum
+}
+
+
 // schedule function
 
 function makeSchedule(time, sandwichNum) {
 
   console.log('----------')
 
-  sandwichesOrdered += sandwichNum
+  const newSandwichNum = checkFeasible(sandwichNum, time, endTime)
+
+  sandwichesOrdered += newSandwichNum
   // console.log(sandwichesOrdered, sandwichesScheduled)
   // schedule = []
 
@@ -79,7 +100,7 @@ function makeSchedule(time, sandwichNum) {
     endTime = sandwichTiming(endTime, i)
   }
 
-  schedule.push({ text: `${time}: ${sandwichNum} sandwiches ordered, estimated wait time: ${getDuration(time, endTime)} min`, time: time })
+  schedule.push({ text: `${time}: ${sandwichNum} sandwiches ordered, ${sandwichNum - newSandwichNum} orders reject, estimated wait time: ${getDuration(time, endTime)} min`, time: time })
   // console.log(`${time}: ${sandwichNum} sandwiches ordered`)
 
 
